@@ -1,0 +1,13 @@
+FOUNDRY-LIFETIME-E47-INTERSECTION
+KKP-R / Nicholas Kouns
+K=(C-6I)(C-30I)
+dim H=125
+dim E47=47
+rank K=78
+Omega_c=47/125
+Delta=11664
+kappa=16
+rho=15/17
+Tr P47=47
+
+Same split 47/78, different generator.
