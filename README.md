@@ -1,6 +1,6 @@
 # FOUNDRY-LIFETIME-E47-INTERSECTION
 
-> **Mathematical City:** [Networked Atlas](https://nicholaskouns-create.github.io/E47-Kartekeya/interfaces/mathematical-city/) · verified by the E47-Kartekeya Pages deployment.
+> **Mathematical City:** [Networked Atlas](https://nicholaskouns-create.github.io/E47-Kartekeya/) · verified by the E47-Kartekeya Pages deployment.
 
 
 **Mark:** Foundry Data Lifetime algebra run through the locked E47 kernel.  
