@@ -1,6 +1,8 @@
 # FOUNDRY-LIFETIME-E47-INTERSECTION
 
 > **Main entry portal:** [The Mathematical City](https://nicholaskouns-create.github.io/website/) — explore the districts, interactive labs, and research index.
+>
+> **[Explore PiP Manta](https://nicholaskouns-create.github.io/E47-Kartekeya/interfaces/pip-manta/embed.html)**
 
 
 **Mark:** Foundry Data Lifetime algebra run through the locked E47 kernel.  
