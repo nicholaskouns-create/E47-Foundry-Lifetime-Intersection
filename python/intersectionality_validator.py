@@ -45,7 +45,33 @@ def ts(day: int) -> datetime:
     return datetime(2026, 1, 1, tzinfo=UTC) + timedelta(days=day)
 
 
+def casimir_matrix() -> np.ndarray:
+    """Total Casimir of V_2^{(x)3}, built from the spin-2 matrices."""
+    m = np.arange(2, -3, -1)
+    up = np.diag(np.sqrt(6 - m[1:] * (m[1:] + 1)), 1)
+    eye = np.eye(5)
+
+    def total(a: np.ndarray) -> np.ndarray:
+        return (np.kron(np.kron(a, eye), eye)
+                + np.kron(np.kron(eye, a), eye)
+                + np.kron(np.kron(eye, eye), a))
+
+    spin = ((up + up.T) / 2, (up - up.T) / 2j, np.diag(m).astype(complex))
+    return sum(total(a) @ total(a) for a in spin)
+
+
+def spectral_projector(C: np.ndarray, lam: int) -> np.ndarray:
+    """Lagrange projector of C onto its lambda-eigenspace."""
+    identity = np.eye(len(C))
+    P = identity.astype(complex)
+    for other in CASIMIR_LOCKED:
+        if other != lam:
+            P = P @ (C - other * identity) / (lam - other)
+    return P
+
+
 def build_graph() -> Graph:
+    """Fixture: the 78/47 split is put in here; the Lifetime algebra must carry it."""
     g = Graph()
     for i in range(DIM_COMPLEMENT_LOCKED):
         kind = TxKind.SNAPSHOT if i == 0 else TxKind.APPEND
@@ -96,7 +122,9 @@ def main() -> int:
     e6, e30 = int(dims[2]), int(dims[5])
     v.eq("dim E6", e6, 25)
     v.eq("dim E30", e30, 22)
-    v.eq("E6 ∩ E30", 0, 0)
+    C = casimir_matrix()
+    v.close("E6 ∩ E30 = {0}  (‖P6·P30‖ on the 125×125 Casimir)",
+            float(np.linalg.norm(spectral_projector(C, 6) @ spectral_projector(C, 30))), 0.0, tol=1e-9)
     v.eq("E6 ⊕ E30 = E47", e6 + e30, 47)
     v.eq("sum sector dims = dim H", int(dims.sum()), 125)
     v.eq("perp dims sum", int(dims.sum() - e6 - e30), 78)

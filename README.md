@@ -28,7 +28,7 @@ Exact executable supplements: [SymPy witness](https://github.com/nicholaskouns-c
 
 Read [PROOF.md](PROOF.md). The repository keeps the Foundry lifetime algebra and the minimal E47 spectral engine needed to reproduce the intersection.
 
-One line: **same split 47/78, different generator.**
+One line: **same split 47/78, different generator.** The Foundry fixture is built with the 47/78 split; the validator certifies that stamping, inheritance, and override carry it exactly. A fixture built with any other split comes back with that split.
 
 ## Executable surface
 

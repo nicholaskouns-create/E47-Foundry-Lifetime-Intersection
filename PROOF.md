@@ -124,7 +124,7 @@ Q.E.D. on the Foundry generator π_*G.
 
 ## 6. Intersection theorem
 
-Construct a raw dataset with 125 transactions, live view size 47, complement 78, and one derived child per transaction. Then
+Construct a raw dataset with 125 transactions, live view size 47, complement 78, and one derived child per transaction. The split is an input of this construction: a fixture built with any split (k, n − k) comes back as (k, n − k). What the theorem certifies is that stamping, inheritance, and override carry the E47 split exactly. Then
 
     |V(D,b)| = 47 = dim E_47
     |V^c| = 78 = rank K
