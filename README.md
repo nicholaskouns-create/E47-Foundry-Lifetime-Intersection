@@ -62,3 +62,5 @@ CI runs this exact route on every push and pull request.
 - [E47-Kartekeya](https://github.com/nicholaskouns-create/E47-Kartekeya) — canonical kernel, certificates, City runtime.
 - [E47-Electroweak-Identities](https://github.com/nicholaskouns-create/E47-Electroweak-Identities) — electroweak identity instrument sharing the same locked kernel.
 - [nicholaskouns-create.github.io](https://github.com/nicholaskouns-create/nicholaskouns-create.github.io) — public vestibule/router.
+
+[The E₄₇ spectral kernel · formalism and verification](e47-spectral-kernel/README.md)
