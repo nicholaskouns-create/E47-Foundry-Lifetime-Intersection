@@ -36,6 +36,10 @@ Read [PROOF.md](PROOF.md). The repository keeps the Foundry lifetime algebra and
 
 One line: **same split 47/78, different generator.** The Foundry fixture is built with the 47/78 split; the validator certifies that stamping, inheritance, and override carry it exactly. A fixture built with any other split comes back with that split.
 
+## Worked lifetime fixtures
+
+Run `python python/lifetime_examples.py` from this repository with the Python dependencies installed. The fixtures cover five live/expired splits from 1/0 through 78/47. The latest-view policy stamps each expired raw transaction and its derived dependent. The derived-dataset override removes the derived stamps and preserves the raw stamps.
+
 ## Executable surface
 
 | File | Role |
