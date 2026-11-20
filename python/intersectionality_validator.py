@@ -74,7 +74,8 @@ def build_graph(live: int = DIM_KERNEL_LOCKED, expired: int = DIM_COMPLEMENT_LOC
     """Build a raw snapshot split with one derived transaction per raw transaction."""
     if live < 1 or expired < 0:
         raise ValueError("Expected at least one live and zero or more expired transactions")
-    total = live + expired
+    expired_children_start = max(200, live + expired)
+    live_children_start = max(300, expired_children_start + expired)
     g = Graph()
     for i in range(expired):
         kind = TxKind.SNAPSHOT if i == 0 else TxKind.APPEND
@@ -83,10 +84,10 @@ def build_graph(live: int = DIM_KERNEL_LOCKED, expired: int = DIM_COMPLEMENT_LOC
     for i in range(1, live):
         g.add(Transaction("raw", f"k{i}", ts(expired + i), "main", TxKind.APPEND))
     for i in range(expired):
-        g.add(Transaction("derived", f"d{i}", ts(total + i), "main", TxKind.SNAPSHOT), [f"p{i}"])
+        g.add(Transaction("derived", f"d{i}", ts(expired_children_start + i), "main", TxKind.SNAPSHOT), [f"p{i}"])
     for i in range(live):
         kid = "k0" if i == 0 else f"k{i}"
-        g.add(Transaction("derived", f"m{i}", ts(total + expired + i), "main", TxKind.SNAPSHOT), [kid])
+        g.add(Transaction("derived", f"m{i}", ts(live_children_start + i), "main", TxKind.SNAPSHOT), [kid])
     return g
 
 

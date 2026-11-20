@@ -1,14 +1,14 @@
 """Compare input splits while holding the lifetime policy fixed."""
 
 from data_lifetime_algebra import Override, Policy, PolicyKind, condemned, evaluate, view_membership
-from intersectionality_validator import build_graph, ts
+from intersectionality_validator import build_graph
 
 
 def main() -> None:
     policy = Policy(PolicyKind.LATEST_VIEW_ONLY, "examples", branches={"main"})
     for live, expired in [(1, 0), (1, 1), (3, 7), (47, 78), (78, 47)]:
         graph = build_graph(live, expired)
-        now = ts(2 * (live + expired))
+        now = max(transaction.t for transaction in graph.transactions.values())
         visible = view_membership(graph, "raw", "main")
         stamped = condemned(evaluate(graph, {"raw": policy}), now)
         override = Override("derived", replacement=None)
