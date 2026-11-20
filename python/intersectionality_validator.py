@@ -70,20 +70,23 @@ def spectral_projector(C: np.ndarray, lam: int) -> np.ndarray:
     return P
 
 
-def build_graph() -> Graph:
-    """Fixture: the 78/47 split is put in here; the Lifetime algebra must carry it."""
+def build_graph(live: int = DIM_KERNEL_LOCKED, expired: int = DIM_COMPLEMENT_LOCKED) -> Graph:
+    """Build a raw snapshot split with one derived transaction per raw transaction."""
+    if live < 1 or expired < 0:
+        raise ValueError("Expected at least one live and zero or more expired transactions")
+    total = live + expired
     g = Graph()
-    for i in range(DIM_COMPLEMENT_LOCKED):
+    for i in range(expired):
         kind = TxKind.SNAPSHOT if i == 0 else TxKind.APPEND
         g.add(Transaction("raw", f"p{i}", ts(i), "main", kind))
-    g.add(Transaction("raw", "k0", ts(DIM_COMPLEMENT_LOCKED), "main", TxKind.SNAPSHOT))
-    for i in range(1, DIM_KERNEL_LOCKED):
-        g.add(Transaction("raw", f"k{i}", ts(DIM_COMPLEMENT_LOCKED + i), "main", TxKind.APPEND))
-    for i in range(DIM_COMPLEMENT_LOCKED):
-        g.add(Transaction("derived", f"d{i}", ts(200 + i), "main", TxKind.SNAPSHOT), [f"p{i}"])
-    for i in range(DIM_KERNEL_LOCKED):
+    g.add(Transaction("raw", "k0", ts(expired), "main", TxKind.SNAPSHOT))
+    for i in range(1, live):
+        g.add(Transaction("raw", f"k{i}", ts(expired + i), "main", TxKind.APPEND))
+    for i in range(expired):
+        g.add(Transaction("derived", f"d{i}", ts(total + i), "main", TxKind.SNAPSHOT), [f"p{i}"])
+    for i in range(live):
         kid = "k0" if i == 0 else f"k{i}"
-        g.add(Transaction("derived", f"m{i}", ts(300 + i), "main", TxKind.SNAPSHOT), [kid])
+        g.add(Transaction("derived", f"m{i}", ts(total + expired + i), "main", TxKind.SNAPSHOT), [kid])
     return g
 
 
